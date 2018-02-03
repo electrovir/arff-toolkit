@@ -1,0 +1,27 @@
+{
+  "name": "arff-toolkit",
+  "version": "0.0.1",
+  "description": "Turn ARFF files into useful objects that can be used by machine learning algorithms in JavaScript.",
+  "main": "arffTools.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electrovir/arff-toolkit.git"
+  },
+  "keywords": [
+    "arff",
+    "machine",
+    "learning"
+  ],
+  "author": "electrovir",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/electrovir/arff-toolkit/issues"
+  },
+  "homepage": "https://github.com/electrovir/arff-toolkit#readme",
+  "dependencies": {
+    "node-arff": "^1.1.0"
+  }
+}
