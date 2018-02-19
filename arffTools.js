@@ -80,9 +80,9 @@ function splitArffTrainValidateTest(arffData, trainSplit, validateSplit, options
   
   let validationData  = Object.assign({}, arffData, {data: []});
   
-  trainTestData.filter((trainRow, index) => {
+  trainTestData.testArffData.data = trainTestData.testArffData.data.filter((trainRow, index) => {
     if (index < Math.floor(validateSplit * arffData.data.length)) {
-      validationData.data.push(dataRow);
+      validationData.data.push(trainRow);
       return false;
     }
     else {
@@ -91,9 +91,9 @@ function splitArffTrainValidateTest(arffData, trainSplit, validateSplit, options
   });
   
   return {
-    trainArffData: trainTestData.trainData,
+    trainArffData: trainTestData.trainArffData,
     validationArffData: validationData,
-    testArffData: trainTestData.testData
+    testArffData: trainTestData.testArffData
   };
 }
 
