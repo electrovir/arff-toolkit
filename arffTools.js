@@ -97,10 +97,11 @@ function splitArffTrainValidateTest(arffData, trainSplit, validateSplit, options
   };
 }
 
+// just a wrapper to make it easier to read ARFF files
 function loadArff(fileName, callback) {
   ARFF.load(fileName, (error, data) => {
     if (error) {
-      throw new Error(error);
+      throw new Error(filename + error);
     }
     callback(data);
   });
@@ -109,6 +110,7 @@ function loadArff(fileName, callback) {
 }
 
 module.exports = {
+  loadArff: loadArff,
   arffToInputs: arffToInputs,
   splitArffTrainTest: splitArffTrainTest, 
   splitArffTrainValidateTest: splitArffTrainValidateTest
