@@ -40,9 +40,9 @@ function separateMultiClassArffData(arffData, outputAttributes) {
 // options:
 //   skipTargetFilter = true: don't filter out target attributes from input attributes. I don't know why you'd want to do this.
 //
-function arffToInputs(arffData, targetAttributes, patternAttributes, options = {}) {  
+function arffToInputs(arffData, targetAttributes, patternAttributes, options = {}) {
   // set the target to the last attribute if no target attributes are given
-  if (!targetAttributes || !Array.isArray(targetAttributes) || targetAttributes.length < 1) {
+  if (!Array.isArray(targetAttributes) || targetAttributes.length === 0) {
     targetAttributes = [arffData.attributes[arffData.attributes.length - 1]];
   }
   // get all the columns that represent the targets and place them in one place
@@ -53,12 +53,12 @@ function arffToInputs(arffData, targetAttributes, patternAttributes, options = {
   });
   
   // set the patternAttributes to all
-  if (!patternAttributes || !Array.isArray(patternAttributes) || patternAttributes.length < 1) {
+  if (!Array.isArray(patternAttributes) || patternAttributes.length === 0) {
     patternAttributes = arffData.attributes;
   }
   if (!options.skipTargetFilter) {
     // filter out the target attributes to get the input attributes
-    patternAttributes = arffData.attributes.filter((attribute) => {
+    patternAttributes = patternAttributes.filter((attribute) => {
       return targetAttributes.indexOf(attribute) === -1;
     });
   }
@@ -69,7 +69,6 @@ function arffToInputs(arffData, targetAttributes, patternAttributes, options = {
       return dataRow[attribute];
     });
   });
-  
   
   return {
     targetColumns: targetColumns,
