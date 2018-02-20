@@ -1,5 +1,41 @@
 const ARFF = require('node-arff');
 
+// this mutates arffData
+function separateMultiClassArffData(arffData, outputAttributes) {  
+  if (!Array.isArray(outputAttributes) || outputAttributes.length === 0) {
+    outputAttributes = [arffData.attributes[arffData.attributes.length - 1]];
+  }
+  
+  outputAttributes.forEach((attribute) => {
+    if (arffData.types[attribute].hasOwnProperty('oneof') && arffData.types[attribute].oneof.length > 2) {
+      
+      arffData.attributes.splice(arffData.attributes.indexOf(attribute), 1);
+      outputAttributes.splice(arffData.attributes.indexOf(attribute), 1);
+      
+      arffData.types[attribute].oneof.forEach((oneofValue, oneofIndex) => {
+        const newAttributeName = attribute + '__' + oneofValue;
+        
+        outputAttributes.push(newAttributeName);
+        arffData.attributes.push(newAttributeName);
+        
+        arffData.types[newAttributeName] = {type: 'nominal', oneof: ['n', 'y']};
+        
+        arffData.data.forEach((entry) => {
+          if (entry[attribute] == oneofIndex) {
+            entry[newAttributeName] = 1;
+          }
+          else {
+            entry[newAttributeName] = 0;
+          }
+        });
+        
+      });
+      
+    }
+  });
+  return outputAttributes;
+}
+
 //
 // options:
 //   skipTargetFilter = true: don't filter out target attributes from input attributes. I don't know why you'd want to do this.
@@ -113,5 +149,6 @@ module.exports = {
   loadArff: loadArff,
   arffToInputs: arffToInputs,
   splitArffTrainTest: splitArffTrainTest, 
-  splitArffTrainValidateTest: splitArffTrainValidateTest
+  splitArffTrainValidateTest: splitArffTrainValidateTest,
+  separateMultiClassArffData: separateMultiClassArffData
 };
