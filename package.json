@@ -2,7 +2,7 @@
   "name": "arff-toolkit",
   "version": "0.0.7",
   "description": "Turn ARFF files into useful objects that can be used by machine learning algorithms in JavaScript.",
-  "main": "arffTools.js",
+  "main": "arffToolkit.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
