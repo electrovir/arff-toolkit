@@ -1,5 +1,27 @@
 const ARFF = require('node-arff');
 
+function splitNFold(arffData, n) {
+  arffData.randomize();
+  const splitLength = arffData.data.length/n;
+  
+  let lastIndex = 0;
+  
+  return arffData.data.reduce((accum, entry, entryIndex) => {
+    const foldIndex = Math.floor(entryIndex / splitLength);
+    
+    if (accum.length <= foldIndex) {
+      let split = Object.assign({}, arffData, {data: []});
+      
+      accum.push({
+        test: Object.assign({}, arffData, {data: []}), // 1 fold
+        train: Object.assign({}, arffData, {data: []}) // N-1 folds
+      });
+    }
+    
+    accum[foldIndex].data.push(entry);
+  }, []);
+}
+
 // this mutates arffData
 function separateMultiClassArffData(arffData, outputAttributes) {  
   if (!Array.isArray(outputAttributes) || outputAttributes.length === 0) {
@@ -149,5 +171,6 @@ module.exports = {
   arffToInputs: arffToInputs,
   splitArffTrainTest: splitArffTrainTest, 
   splitArffTrainValidateTest: splitArffTrainValidateTest,
-  separateMultiClassArffData: separateMultiClassArffData
+  separateMultiClassArffData: separateMultiClassArffData,
+  splitNFold: splitNFold
 };
