@@ -2,24 +2,32 @@ const ARFF = require('node-arff');
 
 function splitNFold(arffData, n) {
   arffData.randomize();
+  console.log(arffData.data.length);
   const splitLength = arffData.data.length/n;
   
-  let lastIndex = 0;
+  let startArray = [];
+  
+  for (let i = 0; i < n; i++) {
+    startArray.push({
+      test: Object.assign({}, arffData, {data: []}), // 1 fold
+      train: Object.assign({}, arffData, {data: []}) // N-1 folds
+    });
+  }
   
   return arffData.data.reduce((accum, entry, entryIndex) => {
     const foldIndex = Math.floor(entryIndex / splitLength);
     
-    if (accum.length <= foldIndex) {
-      let split = Object.assign({}, arffData, {data: []});
-      
-      accum.push({
-        test: Object.assign({}, arffData, {data: []}), // 1 fold
-        train: Object.assign({}, arffData, {data: []}) // N-1 folds
-      });
+    for (let i = 0; i < n; i++ ) {
+      if (foldIndex === i) {
+        accum[i].train.data.push(entry);
+      }
+      else {
+        accum[i].test.data.push(entry);
+      }
     }
     
-    accum[foldIndex].data.push(entry);
-  }, []);
+    return accum;
+  }, startArray);
 }
 
 // this mutates arffData

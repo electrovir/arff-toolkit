@@ -61,3 +61,4 @@ ARFF.arffToInputs(arffData, targetAttributes, patternAttributes, options);
   * **patternAttributes**: List of feature names that are treated as pattern inputs.
   * **targetAttributes**: List of feature names that are treated as targets.
 
+<!-- TODO: add documetation for other functions -->
