@@ -2,7 +2,7 @@ const ARFF = require('node-arff');
 
 function splitNFold(arffData, n) {
   arffData.randomize();
-  console.log(arffData.data.length);
+  
   const splitLength = arffData.data.length/n;
   
   let startArray = [];
