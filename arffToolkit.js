@@ -145,8 +145,8 @@ function splitArffTrainValidateTest(arffData, trainSplit, validateSplit, options
   
   let validationData  = Object.assign({}, arffData, {data: []});
   
-  trainTestData.testArffData.data = trainTestData.testArffData.data.filter((trainRow, index) => {
-    if (index < Math.floor(validateSplit * arffData.data.length)) {
+  trainTestData.trainArffData.data = trainTestData.trainArffData.data.filter((trainRow, index) => {
+    if (index < Math.floor(validateSplit * trainTestData.trainArffData.data.length)) {
       validationData.data.push(trainRow);
       return false;
     }
