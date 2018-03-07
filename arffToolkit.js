@@ -19,10 +19,10 @@ function splitNFold(arffData, n) {
     
     for (let i = 0; i < n; i++ ) {
       if (foldIndex === i) {
-        accum[i].train.data.push(entry);
+        accum[i].test.data.push(entry);
       }
       else {
-        accum[i].test.data.push(entry);
+        accum[i].train.data.push(entry);
       }
     }
     
