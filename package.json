@@ -1,6 +1,6 @@
 {
   "name": "arff-toolkit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Turn ARFF files into useful objects that can be used by machine learning algorithms in JavaScript.",
   "main": "arffToolkit.js",
   "scripts": {
